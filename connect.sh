@@ -16,3 +16,6 @@ while read ssid; do
 	fi
 	done < $ssids
 
+#TODO: reading username and password from username_password file
+#TODO: add a command to adding new ssid to wifi_ssids file
+#TODO: add a command to initializing username_password.txt file
