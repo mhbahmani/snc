@@ -14,6 +14,11 @@ else
 	exit
 fi
 
+if test ! -f $ssids; then
+	echo "There is no modem id in your list. Add one with add_modem command"
+	exit
+fi
+
 while read ssid; do
 	nmcli device wifi connect $ssid
 	connection=$(wget -q --spider --timeout=5 --tries=1 $login_page_url; echo $?)
