@@ -6,10 +6,13 @@ login_page_url=https://net2.sharif.edu/login
 ssids="ssids.txt"
 username_password="username_password.txt"
 
-username=$(awk '/username/ {split($1,a,"="); print a[2]}' $username_password)
-password=$(awk '/password/ {split($1,a,"="); print a[2]}' $username_password)
-
-echo $username $password
+if test -f $username_password; then
+	username=$(awk '/username/ {split($1,a,"="); print a[2]}' $username_password)
+	password=$(awk '/password/ {split($1,a,"="); print a[2]}' $username_password)
+else
+	echo "please first set your net2 username and password using init command"
+	exit
+fi
 
 while read ssid; do
 	nmcli device wifi connect $ssid
