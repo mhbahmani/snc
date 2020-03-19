@@ -31,14 +31,18 @@ if test -z $1; then
 		fi
 		done < $ssids
 
-elif test $1 == "init"; then
+elif test $1 == "newmodem"; then
+	if [ -z $2 ]; then
+		echo "please type modem ssid"
+	else
+		echo "$2" >> $ssids
+	fi
 
-	if [ -z $3 ]
-	then 
+elif test $1 == "init"; then
+	if [ -z $3 ]; then 
 		echo "please type both username and password"
 	else
 		echo -e "username=$2\npassword=$3" > $username_password
 	fi
 fi
 
-#TODO: add a command to adding new ssid to wifi_ssids file
