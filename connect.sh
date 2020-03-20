@@ -22,8 +22,8 @@ if test -z $1; then
 	fi
 
 	while read ssid; do
-		nmcli device wifi connect $ssid
-		connection=$(wget -q --spider --timeout=5 --tries=1 $login_page_url; echo $?)
+		nmcli device wifi connect $ssid > /dev/null 2>&1
+		connection=$(ping -q -w 5 -c 1 $login_page_url > /dev/null 2>&1 && echo 0 || echo 1)
 		if [ $connection -eq 0 ]; then
 			echo Successfully connected
 			curl -Ls -d "username=$username&password=$password" -X POST $login_page_url
