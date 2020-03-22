@@ -9,8 +9,9 @@ if test -z $1; then
 	nmcli device wifi rescan
 
 	if test -f $username_password; then
-		username=$(awk '/username/ {split($1,a,"="); print a[2]}' $username_password)
-		password=$(awk '/password/ {split($1,a,"="); print a[2]}' $username_password)
+		username=$(awk '/username/ {split($1,a,":"); print a[2]}' $username_password)
+		encrypted_password=$(awk '/password/ {split($1,a,":"); print a[2]}' $username_password)
+		password=$(echo $encrypted_password | openssl enc -aes-128-cbc -iter 29 -a -d -salt -pass pass:asdffdsa)
 	else
 		echo "please first set your net2 username and password using init command"
 		exit
@@ -42,7 +43,8 @@ elif test $1 == "init"; then
 	if [ -z $3 ]; then 
 		echo "please type both username and password"
 	else
-		echo -e "username=$2\npassword=$3" > $username_password
+		encrypted_password=$(echo $3 | openssl enc -aes-128-cbc -iter 29 -a -salt -pass pass:asdffdsa)
+		echo -e "username:$2\npassword:$encrypted_password" > $username_password
 	fi
 fi
 
