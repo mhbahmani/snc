@@ -36,7 +36,11 @@ elif test $1 == "newmodem"; then
 	if [ -z $2 ]; then
 		echo "please type modem ssid"
 	else
-		echo "$2" >> $ssids
+		new_ssids=($@)
+		for (( i=1; i<=($#-1); i++ ))
+		do  
+   			echo "${new_ssids[$i]}" >> $ssids
+		done
 	fi
 
 elif test $1 == "init"; then
