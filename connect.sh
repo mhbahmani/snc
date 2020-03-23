@@ -18,7 +18,7 @@ if test -z $1; then
 	fi
 
 	if test ! -f $ssids; then
-		echo "There is no modem id in your list. Add one with add_modem command"
+		echo "There is no modem id in your list. Add one with newmodem command"
 		exit
 	fi
 
