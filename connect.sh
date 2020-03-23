@@ -2,7 +2,7 @@ login_page_url=https://net2.sharif.edu/login
 ssids="ssids.txt"
 username_password="username_password.txt"
 
-if test -z $1; then
+if test "$1" = "c" -o "$1" = "connect"; then
 
 	nmcli radio wifi on
 	sleep 2
@@ -32,7 +32,7 @@ if test -z $1; then
 		fi
 		done < $ssids
 
-elif test $1 == "newmodem"; then
+elif test  "$1" = "newmodem"; then
 	if [ -z $2 ]; then
 		echo "please type modem ssid"
 	else
@@ -43,7 +43,7 @@ elif test $1 == "newmodem"; then
 		done
 	fi
 
-elif test $1 == "init"; then
+elif test "$1" = "init"; then
 	if [ -z $3 ]; then 
 		echo "please type both username and password"
 	else
