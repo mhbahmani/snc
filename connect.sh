@@ -37,7 +37,6 @@ try_connecting_to_modems(){
                         break
                 fi
         done
-
 }
 
 connect(){
@@ -83,17 +82,25 @@ initialize(){
 	echo -e "username:$username\npassword:$encrypted_password" > $username_password_file
 }
 
+show_favorite_modems(){
+	cat $favorite_ssids_file
+}
+
 case $1 in
         connect | c)
 		connect
-		;;  
+		;;
         init | i)
 		initialize $2 $3 
-                ;;  
+                ;;
         newmodem | n)
                 add_modem $@
-                ;;  
-        --help | -h)
+                ;;
+	show | s)
+		show_favorite_modems
+		;;
+	--help | -h)
+		#TODO: add a help
                 echo "help"
                 ;;  
 esac
