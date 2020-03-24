@@ -30,11 +30,11 @@ load_favorite_ssids(){
 try_connecting_to_modems(){
 	for ssid in "${ssids[@]}"
         do      
-                nmcli device wifi connect $ssid > /dev/null 2>&1
-                connection=$(ping -q -w 5 -c 1 $login_page_url > /dev/null 2>&1 && echo 0 || echo 1)
-                if [ $connection -eq 0 ];
-                then    
-                        echo Successfully connected to $ssid
+		nmcli device wifi connect $ssid > /dev/null 2>&1
+		connection=$(ping -q -w 5 -c 1 $login_page_url > /dev/null 2>&1 && echo 0 || echo 1)
+		if [ $connection -eq 0 ];
+		then    
+		        echo Successfully connected to $ssid
                         curl -Ls -d "username=$username&password=$password" -X POST $login_page_url
                         exit
                 fi
@@ -54,14 +54,13 @@ connect(){
 	try_connecting_to_modems
 }
 
-add_modem(){
+add_modem_ssid(){
 	if [ -z $1 ];
 	then
 		echo "Please type modem ssid"
 		echo "See \'--help\' or \'-h\'"
 	else
 		new_ssids=($@)
-		echo $#
 		for (( i=1; i<=($#-1); i++ ))
 		do
    			echo "${new_ssids[$i]}" >> $favorite_ssids_file
@@ -91,6 +90,12 @@ show_favorite_modems(){
 	cat $favorite_ssids_file
 }
 
+remove_modem_ssid(){
+	ssids=$(echo $@ | awk '{ gsub(" ","\\|",$0); print $0}')
+	grep -wi -v "$ssids" $favorite_ssids_file >> tmp.txt
+	mv tmp.txt $favorite_ssids_file
+}
+
 case $1 in
         connect | c)
 		connect
@@ -99,8 +104,11 @@ case $1 in
 		initialize $2 $3 
                 ;;
         newmodem | n)
-                add_modem $@
+                add_modem_ssid $@
                 ;;
+	remove | r)
+		remove_modem_ssid $@
+		;;
 	show | s)
 		show_favorite_modems
 		;;
