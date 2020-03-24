@@ -9,7 +9,8 @@ load_username_password(){
                 encrypted_password=$(awk '/password/ {split($1,a,":"); print a[2]}' $username_password_file)
                 password=$(echo $encrypted_password | openssl enc -aes-128-cbc -iter 29 -a -d -salt -pass pass:asdffdsa)
         else
-                echo "please first set your net2 username and password using init command"
+                echo "Please first set your net2 username and password using init command."
+		echo "See \'--help\' or \'-h\'"
                 exit
         fi
 }
@@ -20,8 +21,9 @@ load_favorite_ssids(){
                 online_favorite_ssids=$(nmcli device wifi list | grep -wi -f $favorite_ssids_file | cut -d '*' -f 2 | awk '{print $1}')
                 ssids=($online_favorite_ssids)
         else
-                echo "There is no modem id in your list. Add one with newmodem command"
-                exit
+                echo "There is no modem id in your list. Add one with newmodem command."
+                echo "See \'--help\' or \'-h\'"
+		exit
         fi
 }
 
@@ -34,9 +36,10 @@ try_connecting_to_modems(){
                 then    
                         echo Successfully connected to $ssid
                         curl -Ls -d "username=$username&password=$password" -X POST $login_page_url
-                        break
+                        exit
                 fi
         done
+	echo "Connecting failed, try again."
 }
 
 connect(){
@@ -54,7 +57,8 @@ connect(){
 add_modem(){
 	if [ -z $1 ];
 	then
-		echo "please type modem ssid"
+		echo "Please type modem ssid"
+		echo "See \'--help\' or \'-h\'"
 	else
 		new_ssids=($@)
 		echo $#
