@@ -96,6 +96,26 @@ remove_modem_ssid(){
 	mv tmp.txt $favorite_ssids_file
 }
 
+help(){
+	echo "boom connects to sharif modems and log you in to net2 in an EZ way!"
+	echo 
+	echo "	usage: boom { COMMAND | ARGUMENTS }	boom does the rest :)"
+  	echo
+
+	echo "commands:"
+        echo "  init | i <username> <password>  gives your net2 username and password"
+	echo "                                  and then log in to net2.sharif.edu. "
+        echo "  connect | c                     connects to one of modems you added befor."
+	echo "  newmodem | n <modem>...         adds a new modem id to your list."
+	echo "  remove | r <modem>...           remove a modem id from list."
+	echo "  show | s                        shows modem ssids you added before."
+	echo 
+
+	echo "arguments:"
+	echo "  --help | -h                     shows this usefull help!"
+	exit 0
+}
+
 case $1 in
         connect | c)
 		connect
@@ -113,8 +133,8 @@ case $1 in
 		show_favorite_modems
 		;;
 	--help | -h)
-		#TODO: add a help
-                echo "help"
+		help
                 ;;  
 esac
+
 
