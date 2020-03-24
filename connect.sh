@@ -70,15 +70,16 @@ add_modem(){
 }
 
 initialize(){
+	username=$1
+	password=$2
 	if [ -z $1 ];
 	then
 		read -p "sharif-id username:" username
 		read -s -p "sharif-id password:" password
 		echo
-	elif [ -z $1 ];
+	elif [ -z $2 ];
 	then
 		echo "$1 assumed as your net2 username"
-		username=$1
 		read -s -p "sharif-id password:" password
 	fi
 
