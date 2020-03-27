@@ -102,11 +102,11 @@ status(){
 help(){
 	echo "snc connects to sharif modems and log you in to net2 in an EZ way!"
 	echo 
-	echo "	usage: snc { COMMAND | ARGUMENTS }	snc does the rest :)"
+	echo "	usage: snc { COMMAND }	snc does the rest :)"
   	echo
 
 	echo "commands:"
-        echo "  init | i <username> <password>  gives your net2 username and password"
+        echo "  config | co <username> <password>  gives your net2 username and password"
 	echo "                                  and then log in to net2.sharif.edu. "
         echo "  connect | c                     connects to one of modems you added befor."
 	echo "  newmodem | n <modem>...         adds a new modem id to your list."
@@ -130,6 +130,7 @@ case $1 in
                 add_modem_ssid $@
                 ;;
 	remove | r)
+
 		remove_modem_ssid $@
 		;;
 	show | sh)

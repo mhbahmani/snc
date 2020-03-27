@@ -12,14 +12,19 @@
 - Some packages that snc install them for you
 
 ### Installing snc
+# Automatic
+1- Run install.sh directly with one of these two
+   - using curl: `bash -c '$(curl -L -fsS --retry 10 https://raw.githubusercontent.com/mhbahmani/snc/master/install.sh)'`
+   - using wget: `bash -c "$(wget -q -O- https://raw.githubusercontent.com/mhbahmani/snc/master/install.sh)"'
 
+# Manual
 1- Clone the repository
- * `git clone https://github.com/mhbahmani/snc.git`
+ * `git clone https://github.com/mhbahmani/snc.git` 
 
 2- Install
  * Linux
    * step into the directory: `cd snc`
-   * `./install.sh`
+   * run `./install.sh`
  * macOs and windows **(in the near feature)** 
    * i'll be happy if you contibute to this!
 
@@ -33,8 +38,8 @@
 |`snc newmodem, n <modem_ssid>`     | Add a modem to your to connect modems list            |
 |`snc remove, r <modem_ssid>`       | Remove a modem from your to connect modems list       |
 |`snc show, s`                      | Show to connect modems list                           |
-|`snc --help, -h`                   | Show help table                                       |
 |`snc status, s`                    | Print connection status.                              |
+|`snc --help, -h`                   | Show help table                                       |
 
 
 ## Bug Report and Feedback
