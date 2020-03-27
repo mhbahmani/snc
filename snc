@@ -1,4 +1,5 @@
 login_page_url=https://net2.sharif.edu/login
+conenction_check_url=google.com
 favorite_ssids_file="ssids.txt"
 username_password_file="username_password.txt"
 
@@ -28,26 +29,24 @@ load_favorite_ssids(){
 }
 
 try_connecting_to_modems(){
-	for ssid in "${ssids[@]}"
-        do      
-		nmcli device wifi connect $ssid > /dev/null 2>&1
-		connection=$(ping -q -w 5 -c 1 $login_page_url > /dev/null 2>&1 && echo 0 || echo 1)
-		if [ $connection -eq 0 ];
-		then    
-		        echo Successfully connected to $ssid
+        for ssid in "${ssids[@]}"
+        do    
+                nmcli device wifi connect $ssid > /dev/null 2>&1
+                connection=$(ping -q -w 5 -c 1 $login_page_url > /dev/null 2>&1 && echo 0 || echo 1)
+                if [ $connection -eq 0 ];
+                then    
+                        echo Successfully connected to $ssid
                         curl -Ls -d "username=$username&password=$password" -X POST $login_page_url
                         exit
                 fi
         done
-	echo "Connecting failed, try again."
+        echo "Connecting failed"
+	echo "Make sure you are close to one of your modems in list"
 }
 
 connect(){
 	nmcli radio wifi on
 	sleep 2
-	nmcli device wifi rescan
-
-	load_username_password
 
 	load_favorite_ssids
 
@@ -68,7 +67,7 @@ add_modem_ssid(){
 	fi
 }
 
-initialize(){
+configure(){
 	username=$1
 	password=$2
 	if [ -z $1 ];
@@ -96,10 +95,14 @@ remove_modem_ssid(){
 	mv tmp.txt $favorite_ssids_file
 }
 
+status(){
+	ping -q -w 5 -c 1 $conenction_check_url > /dev/null &>1 && echo -e '\033[92m'connect || echo -e '\033[91m'no connection
+}
+
 help(){
-	echo "boom connects to sharif modems and log you in to net2 in an EZ way!"
+	echo "snc connects to sharif modems and log you in to net2 in an EZ way!"
 	echo 
-	echo "	usage: boom { COMMAND | ARGUMENTS }	boom does the rest :)"
+	echo "	usage: snc { COMMAND | ARGUMENTS }	snc does the rest :)"
   	echo
 
 	echo "commands:"
@@ -120,8 +123,8 @@ case $1 in
         connect | c)
 		connect
 		;;
-        init | i)
-		initialize $2 $3 
+        config | co)
+		configure $2 $3 
                 ;;
         newmodem | n)
                 add_modem_ssid $@
@@ -129,12 +132,18 @@ case $1 in
 	remove | r)
 		remove_modem_ssid $@
 		;;
-	show | s)
+	show | sh)
 		show_favorite_modems
+		;;
+	status | s)
+		status
 		;;
 	--help | -h)
 		help
-                ;;  
+                ;;
+	*)
+		echo "Find what command you need"
+		help
+		;; 
 esac
-
 
