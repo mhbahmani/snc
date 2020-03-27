@@ -36,7 +36,9 @@
 |`snc --help, -h`                   | Show help table                                       |
 |`snc status, s`                    | Print connection status.                              |
 
+
 ## Bug Report and Feedback
+
  * Please let me know if there is any bug
  * If you had any Feedback about `snc`, i'll be glad to hear it.
  * You can contact me via:
