@@ -1,11 +1,11 @@
 <h1 align="center">snc (sharif-network-connector)</h1>
 
-\`snc\` is a shell code which gives you a hand to connecting to sharif modems and log in to [net2.sharif.edu](https://net2.sharif.edu)
+`snc` is a shell code which gives you a hand to connecting to sharif modems and log in to [net2.sharif.edu](https://net2.sharif.edu)
  
 ### snc; How it works
 - First of all, you have to set net2 username and password.
 - Then you should add your almost used modems to your list.
-- Now, \`snc\` is ready to use.
+- Now, `snc` is ready to use.
 - Use connect command and boom! you're connected to one of your modems with strongest signal and also logged in to ne2.sharif.edu!
 
 ## Installation
@@ -44,7 +44,7 @@
 |`snc connect, c`                   | Connect to a modem you added and log in to net2       |
 |`snc newmodem, n <modem_name> ...` | Add a modem to your to connect modems list            |
 |`snc remove, r <modem_name> ...`   | Remove a modem from your to connect modems list       |
-|`snc show, s`                      | Show to connect modems list                           |
+|`snc show, sh`                      | Show to connect modems list                           |
 |`snc status, s`                    | Print connection status.                              |
 |`snc --help, -h`                   | Show help table                                       |
 

@@ -120,8 +120,9 @@ help(){
 	echo "                                  and then log in to net2.sharif.edu. "
         echo "  connect | c                     connects to one of modems you added befor."
 	echo "  newmodem | n <modem>...         adds a new modem id to your list."
-	echo "  remove | r <modem>...           remove a modem id from list."
-	echo "  show | s                        shows modem ssids you added before."
+	echo "  remove | r <modem>...           removes a modem id from list."
+	echo "  show | sh                       shows modem ssids you added before."
+	echo "  status | s                      shows connection status.
 	echo 
 
 	echo "arguments:"
