@@ -10,7 +10,7 @@ sudo cp snc $main_destination
 sudo chmod +x $main_destination
 
 cd ..
-rm -rf snc
+sudo rm -rf snc
 
 sudo mkdir -p $HOME/.local/share/snc
 touch $HOME/.local/share/snc/ssids.conf

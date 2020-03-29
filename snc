@@ -122,7 +122,7 @@ help(){
 	echo "  newmodem | n <modem>...         adds a new modem id to your list."
 	echo "  remove | r <modem>...           removes a modem id from list."
 	echo "  show | sh                       shows modem ssids you added before."
-	echo "  status | s                      shows connection status.
+	echo "  status | s                      shows connection status."
 	echo 
 
 	echo "arguments:"
