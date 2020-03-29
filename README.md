@@ -13,9 +13,8 @@
 ### Installing Dependencies
 **Dependencies:**
 
-- A laptop with linux is installed on it
-- Being a sharif student for having sharif-id
-- Some packages that snc install them for you
+- A laptop with linux installed
+- net2 account
 
 ### Installing snc
 # Automatic
@@ -40,15 +39,16 @@
 
 | **Command**                       | **Description**                                       |
 |:----------------------------------|:------------------------------------------------------|
-|`snc config, co`                   | set net2 username and password                        |
-|`snc config, co <username> <pass> `| same previous one 
+|`snc config, co`                   | Set net2 username and password                        |
+|`snc config, co <username> <pass> `| Same as previous one 
 |`snc connect, c`                   | Connect to a modem you added and log in to net2       |
-|`snc newmodem, n <modem_ssid>`     | Add a modem to your to connect modems list            |
-|`snc remove, r <modem_ssid>`       | Remove a modem from your to connect modems list       |
+|`snc newmodem, n <modem_name> ...` | Add a modem to your to connect modems list            |
+|`snc remove, r <modem_name> ...`   | Remove a modem from your to connect modems list       |
 |`snc show, s`                      | Show to connect modems list                           |
 |`snc status, s`                    | Print connection status.                              |
 |`snc --help, -h`                   | Show help table                                       |
 
+you can add or remove several modems with once using related command.
 
 ## Bug Report and Feedback
 

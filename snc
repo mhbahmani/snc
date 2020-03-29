@@ -100,7 +100,7 @@ show_favorite_modems(){
 }
 
 remove_modem_ssid(){
-	ssids=$(echo $@ | awk '{ gsub(" ","\\|",$0); print $0}')
+	ssids=$(echo $@ | awk '{gsub(" ","\\|",$0); print $0}')
 	grep -wi -v "$ssids" $favorite_ssids_file >> tmp.txt
 	mv tmp.txt $favorite_ssids_file
 }
