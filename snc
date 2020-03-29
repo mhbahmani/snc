@@ -1,34 +1,35 @@
 login_page_url=https://net2.sharif.edu/login
 conenction_check_url=google.com
-favorite_ssids_file="ssids.txt"
-username_password_file="username_password.txt"
+configs_file="$HOME/.local/share/snc"
+favorite_ssids_file="$configs_file/ssids.conf"
+username_password_file="$configs_file/username_password.conf"
 
 load_username_password(){
-        if test -f $username_password_file;
+        if test -s $username_password_file;
         then
                 username=$(awk '/username/ {split($1,a,":"); print a[2]}' $username_password_file)
                 encrypted_password=$(awk '/password/ {split($1,a,":"); print a[2]}' $username_password_file)
                 password=$(echo $encrypted_password | openssl enc -aes-128-cbc -iter 29 -a -d -salt -pass pass:asdffdsa)
-        else
+	else
                 echo "Please first set your net2 username and password using init command."
-		echo "See \'--help\' or \'-h\'"
-                exit
+		echo "See --help or -h"
+                exit 1
         fi
 }
 
 load_favorite_ssids(){
-        if test -f $favorite_ssids_file;
+        if test -s $favorite_ssids_file;
         then
                 online_favorite_ssids=$(nmcli device wifi list | grep -wi -f $favorite_ssids_file | cut -d '*' -f 2 | awk '{print $1}')
                 ssids=($online_favorite_ssids)
         else
                 echo "There is no modem id in your list. Add one with newmodem command."
-                echo "See \'--help\' or \'-h\'"
-		exit
+                echo "See --help or -h"
+		exit 1
         fi
 }
 
-try_connecting_to_modems(){
+connect_to_modems(){
         for ssid in "${ssids[@]}"
         do    
                 nmcli device wifi connect $ssid > /dev/null 2>&1
@@ -37,7 +38,7 @@ try_connecting_to_modems(){
                 then    
                         echo Successfully connected to $ssid
                         curl -Ls -d "username=$username&password=$password" -X POST $login_page_url
-                        exit
+                        exit 0
                 fi
         done
         echo "Connecting failed"
@@ -48,16 +49,18 @@ connect(){
 	nmcli radio wifi on
 	sleep 2
 
+	load_username_password
 	load_favorite_ssids
 
-	try_connecting_to_modems
+	connect_to_modems
 }
 
 add_modem_ssid(){
 	if [ -z $1 ];
 	then
 		echo "Please type modem ssid"
-		echo "See \'--help\' or \'-h\'"
+		echo "See --help' or -h"
+		exit 1
 	else
 		new_ssids=($@)
 		for (( i=1; i<=($#-1); i++ ))
@@ -86,7 +89,14 @@ configure(){
 }
 
 show_favorite_modems(){
-	cat $favorite_ssids_file
+	if test -s $favorite_ssids_file;
+	then
+		cat $favorite_ssids_file
+	else
+		echo "There is no modem id in your list. Add one with newmodem command."
+		echo "See --help or -h"
+		exit 1
+	fi
 }
 
 remove_modem_ssid(){
@@ -100,9 +110,9 @@ status(){
 }
 
 help(){
-	echo "snc connects to sharif modems and log you in to net2 in an EZ way!"
+	echo "\`snc\` connects sharif modems and log you in to net2 in an EZ way!"
 	echo 
-	echo "	usage: snc { COMMAND }	snc does the rest :)"
+	echo "	usage: snc { COMMAND }  	snc does the rest :)"
   	echo
 
 	echo "commands:"
