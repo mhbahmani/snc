@@ -2,25 +2,28 @@
 
 \`snc\` is a shell code which gives you a hand to connecting to sharif modems and log in to [net2.sharif.edu](https://net2.sharif.edu)
  
-First of all, you have to set net2 username and password
-Then you should add your almost used modems to your list
-Now, \`snc\` is ready to use
-Use [connect | c] command and boom! you're connected to one of your modems with strongest signal and also logged in to ne2.sharif.edu!
+### snc; How it works
+- First of all, you have to set net2 username and password.
+- Then you should add your almost used modems to your list.
+- Now, \`snc\` is ready to use.
+- Use connect command and boom! you're connected to one of your modems with strongest signal and also logged in to ne2.sharif.edu!
 
 ## Installation
 
 ### Installing Dependencies
 **Dependencies:**
 
-- A laptop that linux is installed on it
+- A laptop with linux is installed on it
 - Being a sharif student for having sharif-id
 - Some packages that snc install them for you
 
 ### Installing snc
 # Automatic
 1- Run install.sh directly with one of these two
-   - using curl: `bash -c '$(curl -L -fsS --retry 10 https://raw.githubusercontent.com/mhbahmani/snc/master/install.sh)'`
-   - using wget: `bash -c "$(wget -q -O- https://raw.githubusercontent.com/mhbahmani/snc/master/install.sh)"'
+   - using wget:
+     `bash -c "$(wget -q -O- https://raw.githubusercontent.com/mhbahmani/snc/master/install.sh)"`
+   - using curl:
+     `bash -c "$(curl -L -fsS -r 10 https://raw.githubusercontent.com/mhbahmani/snc/master/install.sh)"`
 
 # Manual
 1- Clone the repository
@@ -50,7 +53,7 @@ Use [connect | c] command and boom! you're connected to one of your modems with 
 ## Bug Report and Feedback
 
  * Please let me know if there is any bug
- * If you had any Feedback about `snc`, i'll be glad to hear it.
+ * If you had any Feedback on `snc`, i'll be glad to hear it.
  * You can contact me via:
    * email: mhbahmani79@gmail.com / mhbahmani@ce.sharif.edu
    * twitter direct message: @mh_bahmani
