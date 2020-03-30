@@ -4,6 +4,7 @@ configs_file="$HOME/.local/share/snc"
 favorite_ssids_file="$configs_file/ssids.conf"
 username_password_file="$configs_file/username_password.conf"
 
+
 load_username_password(){
         if test -s $username_password_file;
         then
@@ -11,7 +12,7 @@ load_username_password(){
                 encrypted_password=$(awk '/password/ {split($1,a,":"); print a[2]}' $username_password_file)
                 password=$(echo $encrypted_password | openssl enc -aes-128-cbc -iter 29 -a -d -salt -pass pass:asdffdsa)
 	else
-                echo "Please first set your net2 username and password using init command."
+                echo "Please first set your net2 username and password using \`config\` command."
 		echo "See --help or -h"
                 exit 1
         fi
@@ -23,42 +24,59 @@ load_favorite_ssids(){
                 online_favorite_ssids=$(nmcli device wifi list | grep -wi -f $favorite_ssids_file | cut -d '*' -f 2 | awk '{print $1}')
                 ssids=($online_favorite_ssids)
         else
-                echo "There is no modem id in your list. Add one with newmodem command."
+                echo "There is no modem id in your list. Add one with \`newmodem\` command."
                 echo "See --help or -h"
 		exit 1
         fi
 }
 
-connect_to_modems(){
+connect_to_specific_modem(){
+	ssid=$1	
+	nmcli device wifi connect $ssid > /dev/null 2>&1
+	connection=$(ping -q -w 5 -c 1 $login_page_url > /dev/null 2>&1 && echo 0 || echo 1)
+	if [ $connection -eq 0 ];
+	then    
+		echo Successfully connected to $ssid
+		load_username_password
+		curl -Ls -d "username=$username&password=$password" -X POST $login_page_url
+		exit 0
+	fi
+}
+
+try_connecting_to_given_modem(){
+        connect_to_specific_modem $1
+        echo "Connecting failed"
+        echo "Make sure you are close to $1 modem"
+}
+
+
+try_connecting_to_favorite_modems(){
+	load_favorite_ssids
         for ssid in "${ssids[@]}"
         do    
-                nmcli device wifi connect $ssid > /dev/null 2>&1
-                connection=$(ping -q -w 5 -c 1 $login_page_url > /dev/null 2>&1 && echo 0 || echo 1)
-                if [ $connection -eq 0 ];
-                then    
-                        echo Successfully connected to $ssid
-                        curl -Ls -d "username=$username&password=$password" -X POST $login_page_url
-                        exit 0
-                fi
+		connect_to_specific_modem $ssid	
         done
-        echo "Connecting failed"
-	echo "Make sure you are close to one of your modems in list"
+	echo "Connecting failed"
+        echo "Make sure you are close to one of your modems in list"
 }
 
 connect(){
 	nmcli radio wifi on
-	sleep 2
+	sleep 1
+	nmcli device wifi rescan > /dev/null 2>&1
 
-	load_username_password
-	load_favorite_ssids
-
-	connect_to_modems
+	if test -z $1;
+	then
+		try_connecting_to_favorite_modems
+	else
+		try_connecting_to_given_modem $1
+	fi
 }
 
 add_modem_ssid(){
 	if [ -z $1 ];
 	then
-		echo "Please type modem ssid"
+		echo "You should give modem ssid"
 		echo "See --help' or -h"
 		exit 1
 	else
@@ -132,7 +150,7 @@ help(){
 
 case $1 in
         connect | c)
-		connect
+		connect $2
 		;;
         config | co)
 		configure $2 $3 

@@ -2,29 +2,29 @@
 
 `snc` is a shell code which gives you a hand to connecting to sharif modems and log in to [net2.sharif.edu](https://net2.sharif.edu)
  
-### snc; How it works
+## snc; How it works
 - First of all, you have to set net2 username and password.
 - Then you should add your almost used modems to your list.
 - Now, `snc` is ready to use.
-- Use connect command and boom! you're connected to one of your modems with strongest signal and also logged in to ne2.sharif.edu!
+- Use `snc connect` command and boom! you're connected to one of your modems with strongest signal and also logged in to ne2.sharif.edu!
 
-## Installation
+# Installation
 
 ### Installing Dependencies
 **Dependencies:**
 
-- A laptop with linux installed
+- Laptop!
 - net2 account
 
-### Installing snc
-# Automatic
+## Installing snc
+### Automatic
 1- Run install.sh directly with one of these two
    - using wget:
-     `bash -c "$(wget -q -O- https://raw.githubusercontent.com/mhbahmani/snc/master/install.sh)"`
+     * `bash -c "$(wget -q -O- https://raw.githubusercontent.com/mhbahmani/snc/master/install.sh)"`
    - using curl:
-     `bash -c "$(curl -L -fsS -r 10 https://raw.githubusercontent.com/mhbahmani/snc/master/install.sh)"`
+     * `bash -c "$(curl -L -fsS -r 5 https://raw.githubusercontent.com/mhbahmani/snc/master/install.sh)"`
 
-# Manual
+### Manual
 1- Clone the repository
  * `git clone https://github.com/mhbahmani/snc.git` 
 
@@ -32,19 +32,19 @@
  * Linux
    * step into the directory: `cd snc`
    * run `./install.sh`
- * macOs and windows **(in the near feature)** 
+ * macOs and windows **(in the near future)** 
    * i'll be happy if you contibute to this!
 
-### snc; How to use
+## snc; How to use
 
 | **Command**                       | **Description**                                       |
 |:----------------------------------|:------------------------------------------------------|
 |`snc config, co`                   | Set net2 username and password                        |
-|`snc config, co <username> <pass> `| Same as previous one 
+|`snc config, co <username> <pass>` | Same as previous one                                  |
 |`snc connect, c`                   | Connect to a modem you added and log in to net2       |
 |`snc newmodem, n <modem_name> ...` | Add a modem to your to connect modems list            |
 |`snc remove, r <modem_name> ...`   | Remove a modem from your to connect modems list       |
-|`snc show, sh`                      | Show to connect modems list                           |
+|`snc show, sh`                     | Show modems list                                      |
 |`snc status, s`                    | Print connection status.                              |
 |`snc --help, -h`                   | Show help table                                       |
 
