@@ -41,10 +41,10 @@
 |:----------------------------------|:------------------------------------------------------|
 |`snc config, co`                   | Set net2 username and password                        |
 |`snc config, co <username> <pass>` | Same as previous one                                  |
-|`snc connect, c`                   | Connect to a modem you added and log in to net2       |
+|`snc connect, c`                   | Connect to a added modem and log me in to net2        |
 |`snc connect, c <modem_name>`      | Connect to given modem                                |
-|`snc newmodem, n <modem_name> ...` | Add a modem to your to connect modems list            |
-|`snc remove, r <modem_name> ...`   | Remove a modem from your to connect modems list       |
+|`snc newmodem, n <modem_name> ...` | Add a modem to my to connect modems list              |
+|`snc remove, r <modem_name> ...`   | Remove a modem from my to connect modems list         |
 |`snc show, sh`                     | Show modems list                                      |
 |`snc status, s`                    | Print connection status.                              |
 |`snc --help, -h`                   | Show help table                                       |
