@@ -13,15 +13,18 @@ cd ..
 sudo rm -rf snc
 
 sudo mkdir -p $HOME/.local/share/snc
-touch $HOME/.local/share/snc/ssids.conf
-touch $HOME/.local/share/snc/username_password.conf
+sudo touch $HOME/.local/share/snc/ssids.conf
+sudo touch $HOME/.local/share/snc/username_password.conf
 
 
 echo
-echo "snc successfully installed."
-echo "enjoy!"
+echo "snc successfully installed." | pv -qL 15
+echo "enjoy!" | pv -qL 10
 echo
-echo "\`snc\` connects sharif modems and log you in to net2 in an EZ way!"
+
+sleep 2
+
+echo "\`snc\` connects to sharif modems and log you in to net2 in an EZ way!"
 echo 
 echo "First, U have to set net2 username and password using [config | co] command."
 echo "Then you should add your almost used modems to the list using [newmodem | n] command."
@@ -30,4 +33,3 @@ echo "Use [connect | c] command and boom! you're connected to a modem with stron
 echo
 echo "You can see commands list with [--help | -h]"
 echo
-snc --help
