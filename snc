@@ -135,9 +135,12 @@ help(){
   	echo
 
 	echo "commands:"
-        echo "  config | co <username> <password>  gives your net2 username and password"
-	echo "                                  and then log in to net2.sharif.edu. "
-        echo "  connect | c                     connects to one of modems you added befor."
+	echo "  config | co                     saves your net2 username and password."
+        echo "  config | co <username> <password> same."
+	echo "  connect | c                     connects to one of the modems you added "
+        echo "                                  before that has strongest signal"
+	echo "                                  and then does the job with net2.sharif.edu."
+        echo "  connect | c <moddem>            connects to specific modem and goes on."
 	echo "  newmodem | n <modem>...         adds a new modem id to your list."
 	echo "  remove | r <modem>...           removes a modem id from list."
 	echo "  show | sh                       shows modem ssids you added before."
