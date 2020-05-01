@@ -1,3 +1,5 @@
+#!/bin/bash
+
 login_page_url=https://net2.sharif.edu/login
 conenction_check_url=google.com
 configs_file="$HOME/.local/share/snc"
@@ -74,7 +76,7 @@ connect(){
 }
 
 add_modem_ssid(){
-	if [ -z $1 ];
+	if [ -z $2 ];
 	then
 		echo "You should give modem ssid"
 		echo "See --help' or -h"
@@ -83,7 +85,7 @@ add_modem_ssid(){
 		new_ssids=($@)
 		for (( i=1; i<=($#-1); i++ ))
 		do
-   			echo "${new_ssids[$i]}" >> $favorite_ssids_file
+			echo "${new_ssids[$i]}" | sudo tee -a $favorite_ssids_file > /dev/null
 		done
 	fi
 }
@@ -103,7 +105,7 @@ configure(){
 	fi
 
 	encrypted_password=$(echo $password | openssl enc -aes-128-cbc -iter 29 -a -salt -pass pass:asdffdsa)
-	echo -e "username:$username\npassword:$encrypted_password" > $username_password_file
+	echo -e "username:$username\npassword:$encrypted_password" | sudo tee $username_password_file > /dev/null
 }
 
 show_favorite_modems(){
@@ -119,8 +121,8 @@ show_favorite_modems(){
 
 remove_modem_ssid(){
 	ssids=$(echo $@ | awk '{gsub(" ","\\|",$0); print $0}')
-	grep -wi -v "$ssids" $favorite_ssids_file >> tmp.txt
-	mv tmp.txt $favorite_ssids_file
+	sudo grep -wi -v "$ssids" $favorite_ssids_file >> tmp.txt
+	sudo mv tmp.txt $favorite_ssids_file
 }
 
 status(){
@@ -163,7 +165,6 @@ case $1 in
                 add_modem_ssid $@
                 ;;
 	remove | r)
-
 		remove_modem_ssid $@
 		;;
 	show | sh)
@@ -176,7 +177,7 @@ case $1 in
 		help
                 ;;
 	*)
-		echo "Find what command you need"
+		echo "Find what you want"
 		help
 		;; 
 esac
