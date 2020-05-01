@@ -6,7 +6,7 @@
 - First of all, you have to set net2 username and password.
 - Then you should add your almost used modems to your list.
 - Now, `snc` is ready to use.
-- Use `snc connect` command and boom! you're connected to one of your modems with strongest signal and also logged in to ne2.sharif.edu!
+- Use `snc connect` command and boom! you're connected to one of your modems that has the strongest signal and also logged in to ne2.sharif.edu!
 
 # Installation
 
