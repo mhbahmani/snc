@@ -1,6 +1,9 @@
 #!/bin/bash
 
-git clone https://github.com/mhbahmani/snc
+echo "installing snc ..." | pv -qL 20
+
+git clone https://github.com/mhbahmani/snc > /dev/null 2>&1
+
 cd snc
 
 main_destination=/usr/local/bin/snc
@@ -16,15 +19,16 @@ sudo mkdir -p $HOME/.local/share/snc
 sudo touch $HOME/.local/share/snc/ssids.conf
 sudo touch $HOME/.local/share/snc/username_password.conf
 
+clear
 
-echo
-echo "snc successfully installed." | pv -qL 15
+echo "snc successfully installed." | pv -qL 12
 echo "enjoy!" | pv -qL 10
 echo
 
 sleep 2
+clear
 
-echo "\`snc\` connects to sharif modems and log you in to net2 in an EZ way!"
+echo "\`snc\` connects to sharif modems and log you in to net2"
 echo 
 echo "First, U have to set net2 username and password using [config | co] command."
 echo "Then you should add your almost used modems to the list using [newmodem | n] command."
