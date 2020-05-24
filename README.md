@@ -19,6 +19,7 @@
 ## Installing snc
 ### Automatic
 1- Run install.sh directly with one of these two
+ - Linux and MacOS
    - using wget:
      * `bash -c "$(wget -q -O- https://raw.githubusercontent.com/mhbahmani/snc/master/install.sh)"`
    - using curl:
@@ -29,10 +30,10 @@
  * `git clone https://github.com/mhbahmani/snc.git` 
 
 2- Install
- * Linux
+ * Linux and MacOS
    * step into the directory: `cd snc`
    * run `./install.sh`
- * macOs and windows **(in the near future)** 
+ * Windows **(in the near future)** 
    * i'll be happy if you contibute to this!
 
 ## snc; How to use
