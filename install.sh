@@ -1,5 +1,6 @@
 #!/bin/bash
 
+sudo apt install pv > /dev/null 2>&1
 echo "installing snc ..." | pv -qL 20
 
 git clone https://github.com/mhbahmani/snc > /dev/null 2>&1
@@ -18,8 +19,6 @@ sudo rm -rf snc
 sudo mkdir -p $HOME/.local/share/snc
 sudo touch $HOME/.local/share/snc/ssids.conf
 sudo touch $HOME/.local/share/snc/username_password.conf
-
-clear
 
 echo "snc successfully installed." | pv -qL 12
 echo "enjoy!" | pv -qL 10
