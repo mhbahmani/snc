@@ -3,22 +3,20 @@
 sudo apt install pv > /dev/null 2>&1
 echo "installing snc ..." | pv -qL 20
 
-git clone https://github.com/mhbahmani/snc > /dev/null 2>&1
-
-cd snc
-
 main_destination=/usr/local/bin/snc
-sudo rm -rf $main_destination
+sudo rm -rf $main_destination 
 
-sudo cp snc $main_destination
-sudo chmod +x $main_destination
+snc=$(wget -q -O- https://raw.githubusercontent.com/mhbahmani/snc/master/snc)
 
-cd ..
-sudo rm -rf snc
+sudo tee $main_destination << EOF > /dev/null
+$snc 
+EOF
 
-sudo mkdir -p $HOME/.local/share/snc
-sudo touch $HOME/.local/share/snc/ssids.conf
-sudo touch $HOME/.local/share/snc/username_password.conf
+sudo chmod +x $main_destination 
+
+mkdir -p $HOME/.local/share/snc
+touch $HOME/.local/share/snc/ssids.conf
+touch $HOME/.local/share/snc/username_password.conf
 
 echo "snc successfully installed." | pv -qL 12
 echo "enjoy!" | pv -qL 10
