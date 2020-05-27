@@ -23,7 +23,7 @@
    - using wget:
      * `bash -c "$(wget -q -O- https://raw.githubusercontent.com/mhbahmani/snc/master/install.sh)"`
    - using curl:
-     * `bash -c "$(curl -L -fsS -r 5 https://raw.githubusercontent.com/mhbahmani/snc/master/install.sh)"`
+     * `bash -c "$(curl -LfsS -r 5 https://raw.githubusercontent.com/mhbahmani/snc/master/install.sh)"`
  - Windows **(in the near future)** 
    - 404 Not Found :(
 
