@@ -23,8 +23,8 @@ load_username_password(){
 load_favorite_ssids(){
         if test -s $favorite_ssids_file;
         then
-                online_favorite_ssids=$(nmcli device wifi list | grep -wi -f $favorite_ssids_file | cut -d '*' -f 2 | awk '{print $1}')
-                ssids=($online_favorite_ssids)
+                online_favorite_ssids=$(nmcli device wifi list | grep -wi -f $favorite_ssids_file | cut -d '*' -f 2 | awk '{print $2}')
+		ssids=($online_favorite_ssids)
         else
                 echo "There is no modem id in your list. Add one with \`newmodem\` command."
                 echo "See --help or -h"
@@ -54,8 +54,8 @@ try_connecting_to_given_modem(){
 
 try_connecting_to_favorite_modems(){
 	load_favorite_ssids
-        for ssid in "${ssids[@]}"
-        do    
+        for ssid in "${ssids[@]}";
+        do
 		connect_to_specific_modem $ssid	
         done
 	echo "Connecting failed"
