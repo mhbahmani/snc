@@ -126,7 +126,7 @@ remove_modem_ssid(){
 }
 
 status(){
-	ping -q -w 5 -c 1 $conenction_check_url > /dev/null 2>&1 && echo -e '\033[92m'connect || echo -e '\033[91m'no connection
+	ping -q -w 5 -c 1 $conenction_check_url > /dev/null 2>&1 && echo -e '\033[92m'connected || echo -e '\033[91m'no connection
 
 }
 
