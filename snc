@@ -83,9 +83,9 @@ add_modem_ssid(){
 		exit 1
 	else
 		new_ssids=($@)
-		for (( i=1; i<=($#-1); i++ ))
+		for (( i=1; i<=($#-1); i++ ));
 		do
-			echo "${new_ssids[$i]}" | sudo tee -a $favorite_ssids_file > /dev/null
+			echo "${new_ssids[$i]}" | tee -a $favorite_ssids_file > /dev/null
 		done
 	fi
 }
@@ -105,7 +105,7 @@ configure(){
 	fi
 
 	encrypted_password=$(echo $password | openssl enc -aes-128-cbc -iter 29 -a -salt -pass pass:asdffdsa)
-	echo -e "username:$username\npassword:$encrypted_password" | sudo tee $username_password_file > /dev/null
+	echo -e "username:$username\npassword:$encrypted_password" | tee $username_password_file > /dev/null
 }
 
 show_favorite_modems(){
@@ -121,8 +121,8 @@ show_favorite_modems(){
 
 remove_modem_ssid(){
 	ssids=$(echo $@ | awk '{gsub(" ","\\|",$0); print $0}')
-	sudo grep -wi -v "$ssids" $favorite_ssids_file >> tmp.txt
-	sudo mv tmp.txt $favorite_ssids_file
+	grep -wi -v "$ssids" $favorite_ssids_file >> tmp.txt
+	mv tmp.txt $favorite_ssids_file
 }
 
 status(){
