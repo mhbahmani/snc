@@ -1,8 +1,5 @@
 #!/bin/bash
 
-sudo apt install pv > /dev/null 2>&1
-echo "installing snc ..." | pv -qL 20
-
 main_destination=/usr/local/bin/snc
 sudo rm -rf $main_destination 
 
@@ -18,8 +15,8 @@ mkdir -p $HOME/.local/share/snc
 touch $HOME/.local/share/snc/ssids.conf
 touch $HOME/.local/share/snc/username_password.conf
 
-echo "snc successfully installed." | pv -qL 12
-echo "enjoy!" | pv -qL 10
+echo "snc successfully installed."
+echo "enjoy!"
 echo
 
 sleep 2
