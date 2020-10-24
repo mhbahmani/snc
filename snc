@@ -15,7 +15,7 @@ load_username_password(){
                 password=$(echo $encrypted_password | openssl enc -aes-128-cbc -iter 29 -a -d -salt -pass pass:asdffdsa)
 	else
                 echo "Please first set your net2 username and password using \`config\` command."
-		echo "See --help or -h"
+		echo "See --help or -h for more"
                 exit 1
         fi
 }
@@ -27,28 +27,37 @@ load_favorite_ssids(){
 		ssids=($online_favorite_ssids)
         else
                 echo "There is no modem id in your list. Add one with \`newmodem\` command."
-                echo "See --help or -h"
+                echo "See --help or -h for more."
 		exit 1
         fi
 }
 
 connect_to_specific_modem(){
-	ssid=$1	
+	ssid="$1"
 	nmcli device wifi connect $ssid > /dev/null 2>&1
 	connection=$(ping -q -w 5 -c 1 $login_page_url > /dev/null 2>&1 && echo 0 || echo 1)
 	if [ $connection -eq 1 ];
 	then
-		echo Successfully connected to $ssid
+		echo "Connected to $ssid"
 		load_username_password
 		curl -Ls -d "username=$username&password=$password" -X POST $login_page_url > /dev/null 2>&1
-		exit 0
+		connection=$(ping -q -w 2 -c 1 $conenction_check_url > /dev/null 2>&1 && echo 1 || echo 0)
+		if [ $connection -eq 1 ];
+		then
+			echo "Successfully logged in"
+			exit 0
+		else
+			echo "Login Failed. Something is wrong with net2"
+			exit 1
+		fi
 	fi
+	echo "I Couldn't find any of your modems around here"
+        echo "Make sure you are close to one of your modems in the list"
+	exit 1
 }
 
 try_connecting_to_given_modem(){
         connect_to_specific_modem $1
-        echo "Connecting failed"
-        echo "Make sure you are close to $1 modem"
 }
 
 
@@ -56,16 +65,14 @@ try_connecting_to_favorite_modems(){
 	load_favorite_ssids
         for ssid in "${ssids[@]}";
         do
-		connect_to_specific_modem $ssid	
+		connect_to_specific_modem "$ssid"	
         done
-	echo "Connecting failed"
-        echo "Make sure you are close to one of your modems in list"
 }
 
 connect(){
-	nmcli radio wifi on
-	sleep 1
-	nmcli device wifi rescan > /dev/null 2>&1
+	# nmcli radio wifi on
+	# sleep 1
+	# nmcli device wifi rescan > /dev/null 2>&1
 
 	if test -z $1;
 	then
@@ -156,7 +163,7 @@ help(){
 
 case $1 in
         connect | c)
-		connect $2
+		connect "$2"
 		;;
         config | co)
 		configure $2 $3 
