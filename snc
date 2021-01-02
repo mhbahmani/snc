@@ -25,7 +25,7 @@ load_favorite_ssids(){
         then
                 online_favorite_ssids=$(nmcli device wifi list | grep -wi -f $favorite_ssids_file | cut -d '*' -f 2 | awk '{print $2}')
 		ssids=($online_favorite_ssids)
-        else
+	else
                 echo "There is no modem id in your list. Add one with \`newmodem\` command."
                 echo "See --help or -h for more."
 		exit 1
@@ -34,8 +34,9 @@ load_favorite_ssids(){
 
 connect_to_specific_modem(){
 	ssid="$1"
+	echo "Connecting to $ssid"
 	nmcli device wifi connect $ssid > /dev/null 2>&1
-	connection=$(ping -q -w 5 -c 1 $login_page_url > /dev/null 2>&1 && echo 0 || echo 1)
+	connection=$(ping -q -w 5 -c 1 $login_page_url > /dev/null 2>&1 && echo 1 || echo 0)
 	if [ $connection -eq 1 ];
 	then
 		echo "Connected to $ssid"
@@ -47,12 +48,11 @@ connect_to_specific_modem(){
 			echo "Successfully logged in"
 			exit 0
 		else
-			echo "Login Failed. Something is wrong with net2"
-			exit 1
+			echo "Login Failed"
 		fi
 	fi
 	echo "I Couldn't find any of your modems around here"
-        echo "Make sure you are close to one of your modems in the list"
+        echo "Make sure you are close to one of your modems in the list or add new one"
 	exit 1
 }
 
