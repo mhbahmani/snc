@@ -5,6 +5,7 @@ osInfo[/etc/debian_version]="sudo apt-get install -y"
 osInfo[/etc/alpine-release]="sudo apk --update add"
 osInfo[/etc/centos-release]="sudo yum install -y"
 osInfo[/etc/fedora-release]="sudo dnf install -y"
+osInfo[/etc/manjaro-release]="sudo pamac install -y"
 
 for f in ${!osInfo[@]}
 do
@@ -46,8 +47,8 @@ echo "snc successfully installed."
 echo "enjoy!"
 echo
 
-sleep 1
-clear
+sleep 0.5
+echo
 
 echo "\`snc\` connects to sharif modems and log you in to net2"
 echo 
