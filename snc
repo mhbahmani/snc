@@ -1,5 +1,6 @@
 #!/bin/bash
 
+net2_url=net2.sharif.edu
 login_page_url=https://net2.sharif.edu/login
 conenction_check_url=google.com
 configs_file="$HOME/.local/share/snc"
@@ -32,14 +33,17 @@ load_favorite_ssids(){
         fi
 }
 
-connect_to_specific_modem(){
+login(){
 	ssid="$1"
-	echo "Connecting to $ssid"
-	nmcli device wifi connect $ssid > /dev/null 2>&1
-	connection=$(ping -q -w 5 -c 1 $login_page_url > /dev/null 2>&1 && echo 1 || echo 0)
+	connection=$(ping -q -w 5 -c 1 $net2_url > /dev/null 2>&1 && echo 1 || echo 0)
 	if [ $connection -eq 1 ];
 	then
-		echo "Connected to $ssid"
+		if test -z $ssid;
+		then
+			echo "Wire Connection; check"
+		else
+			echo "Connected to $ssid"
+		fi
 		load_username_password
 		curl -Ls -d "username=$username&password=$password" -X POST $login_page_url > /dev/null 2>&1
 		connection=$(ping -q -w 2 -c 1 $conenction_check_url > /dev/null 2>&1 && echo 1 || echo 0)
@@ -50,7 +54,16 @@ connect_to_specific_modem(){
 		else
 			echo "Login Failed"
 		fi
+	else
+		echo "Seems like there is a problem. Make sure cable is connected"
 	fi
+}
+
+
+connect_to_specific_modem(){
+	echo "Connecting to $ssid"
+	nmcli device wifi connect $ssid > /dev/null 2>&1
+	login $1
 	echo "I Couldn't find any of your modems around here"
         echo "Make sure you are close to one of your modems in the list or add new one"
 	exit 1
@@ -63,14 +76,15 @@ try_connecting_to_given_modem(){
 
 try_connecting_to_favorite_modems(){
 	load_favorite_ssids
-        for ssid in "${ssids[@]}";
+	for ssid in "${ssids[@]}";
         do
+		echo $ssid
 		connect_to_specific_modem "$ssid"	
         done
 }
 
 connect(){
-	# nmcli radio wifi on
+	nmcli radio wifi on
 	# sleep 1
 	# nmcli device wifi rescan > /dev/null 2>&1
 
@@ -138,7 +152,7 @@ status(){
 }
 
 help(){
-	echo "\`snc\` connects sharif modems and log you in to net2 in an EZ way!"
+	echo " \`snc\` connects sharif modems and log you in to net2 in an EZ way!"
 	echo 
 	echo "	usage: snc { COMMAND }  	snc does the rest :)"
   	echo
@@ -164,6 +178,9 @@ help(){
 case $1 in
         connect | c)
 		connect "$2"
+		;;
+	connectwire | cw)
+		login
 		;;
         config | co)
 		configure $2 $3 
