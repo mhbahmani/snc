@@ -2,6 +2,7 @@
 
 net2_url=net2.sharif.edu
 login_page_url=https://net2.sharif.edu/login
+status_page_url="http://net2.sharif.edu/status"
 conenction_check_url=google.com
 configs_file="$HOME/.local/share/snc"
 favorite_ssids_file="$configs_file/ssids.conf"
@@ -148,8 +149,15 @@ remove_modem_ssid(){
 }
 
 status(){
-	ping -q -w 5 -c 1 $conenction_check_url > /dev/null 2>&1 && echo -e '\033[92m'connected || echo -e '\033[91m'no connection
-
+	connection=$(ping -q -w 2 -c 1 $conenction_check_url > /dev/null 2>&1 && echo 1 || echo 0)
+	if [ $connection -eq 1 ];
+	then
+		echo -e '\033[92m'connected
+		username=$(wget -qO- $status_page_url | grep '<td align="left">Username:</td>' -A1 | grep '<td>' | awk '{ print substr( $0, 1, length($0)-6 ) }' | awk '{ print substr( $1, 5) }')
+		echo "logged in as $username"
+	else
+		echo -e '\033[91m'no connection
+	fi
 }
 
 help(){
