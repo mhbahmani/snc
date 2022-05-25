@@ -1,7 +1,10 @@
 <h1 align="center">snc (sharif-network-connector)</h1>
 
-`snc` is a shell code which gives you a hand to connecting to sharif modems and log in to [net2.sharif.edu](https://net2.sharif.edu)
- 
+`snc` is a shell code which gives you a hand to connecting to sharif modems and log in to [net2.sharif.edu](https://net2.sharif.edu)  
+  
+This project was my first script and just for practicing bash script. command below would also do the login thing for you 😉  
+`curl -Ls -d "username=<username>&password=<password>" -X POST https://net2.sharif.edu/login | grep "You are logged in" > /dev/null && echo 1 || echo 0`  
+  
 ## snc; How it works
 - First of all, you have to set net2 username and password.
 - Then you should add your almost used modems to your list.
